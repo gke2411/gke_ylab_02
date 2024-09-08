@@ -1,0 +1,17 @@
+/bitrix
+/company
+/contacts
+/include
+/login
+/news
+/products
+/search
+/services
+/upload
+/favicon.ico
+/index.php
+/log.txt
+!/.gitignore
+/404.php
+/500.htmp
+/urlrewrite.php
