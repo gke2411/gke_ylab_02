@@ -23,4 +23,8 @@ $APPLICATION->SetTitle(\CIBlock::GetList(Array(),Array("CODE"=> "gkeaccessmgmt")
 		"CACHE_TIME" => "300"
 	),
 	false
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?>
+<?
+//
+?>
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
