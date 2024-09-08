@@ -402,4 +402,15 @@ class gkeAccessIB20240908175205 extends Version
 ));
 
     }
+    public function down()
+    {
+        $helper = $this->getHelperManager();
+        $ok = $helper->Iblock()->deleteIblockIfExists('gkeaccessmgmt');
+
+        if ($ok) {
+            $this->outSuccess('Инфоблок удален');
+        } else {
+            $this->outError('Ошибка удаления инфоблока');
+        }
+    }
 }

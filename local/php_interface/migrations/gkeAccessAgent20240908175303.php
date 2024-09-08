@@ -30,4 +30,14 @@ class gkeAccessAgent20240908175303 extends Version
   'RETRY_COUNT' => '0',
 ));
     }
+    public function down(){
+		$helper = $this->getHelperManager();
+		$ok = $helper->Agent()->deleteAgent("", "gkeAccessDisableElement();");
+		
+        if ($ok) {
+            $this->outSuccess('Агент удален');
+        } else {
+            $this->outError('Ошибка удаления агента');
+        }
+    }
 }
