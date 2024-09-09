@@ -18,7 +18,7 @@ $APPLICATION->SetTitle(\CIBlock::GetList(Array(),Array("CODE"=> "gkeaccessmgmt")
 			3 => "",
 		),
 		"IBLOCK_CODE" => "gkeaccessmgmt",
-		"ACTIVE" => "",
+		"ACTIVE" => "t",
 		"CACHE_TYPE" => "A",
 		"CACHE_TIME" => "300"
 	),
