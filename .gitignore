@@ -13,5 +13,5 @@
 /log.txt
 !/.gitignore
 /404.php
-/500.htmp
+/500.html
 /urlrewrite.php
