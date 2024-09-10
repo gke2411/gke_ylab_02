@@ -42,12 +42,10 @@ function gkeAccessUniqueCode($iblockid = 0){
 	return $text;
 }
 
+$eventManager = \Bitrix\Main\EventManager::getInstance();
+$eventManager->addEventHandlerCompatible("iblock", "OnBeforeIBlockElementAdd", "GkeOnBeforeIBlockElementAddHandler");
 
-AddEventHandler("iblock", "OnBeforeIBlockElementAdd", Array("GkeAccessAddClass", "OnBeforeIBlockElementAddHandler"));
-
-class GkeAccessAddClass
-{
-	public static function OnBeforeIBlockElementAddHandler(&$arFields)
+function GkeOnBeforeIBlockElementAddHandler(&$arFields)
 	{
 		$gkeIBlockID = (\CIBlock::GetList(Array(),Array("CODE"=> "gkeaccessmgmt"),false)->Fetch()['ID']);
 		if($arFields["IBLOCK_ID"] == $gkeIBlockID)
@@ -60,61 +58,20 @@ class GkeAccessAddClass
 			{
 				$arFields["ACTIVE_TO"] = ConvertTimeStamp((AddToTimeStamp(array("DD" => +7) ,MakeTimeStamp($arFields["ACTIVE_FROM"]))), "FULL", 'ru');
 			}
-			/*
-			$elementCodeSet = false; 
-			$dbItems = [];
-			while (!$elementCodeSet) 
-			{
-				$elementCodeRandString = randString(6, array(
-						"abcdefghijklnmopqrstuvwxyz",
-						"ABCDEFGHIJKLNMOPQRSTUVWXYZ",
-						"0123456789",
-						//"!@#\$%^&*()",
-				));
 
-				$dbItems = CIBlockElement::GetList(
-					[],
-					[
-					 'IBLOCK_ID' => $gkeIBlockID,
-					 'CODE' => $elementCodeRandString,
-					],
-					false,
-					false,
-					[
-					 'IBLOCK_ID',
-					 'ID',
-					 'CODE'
-					]
-				);
-				$arResult = [];
-				while($arItem = $dbItems->Fetch()){
-					$arResult[] = $arItem;
-				};
-				//AddMessage2Log("Запись с кодом: ".$arFields["CODE"]." - проверена.");
-				if($arResult == []) {
-					$arFields["CODE"] = $elementCodeRandString;
-					$elementCodeSet = true;
-					//AddMessage2Log("Запись с кодом: ".$arFields["CODE"]." - установлена.");
-				}
-			}
-			*/
 			$arFields["CODE"] =gkeAccessUniqueCode($gkeIBlockID); 
 		}
 	}
-}
 
-AddEventHandler("iblock", "OnBeforeIBlockElementUpdate", Array("GkeAccessUpdateClass", "OnBeforeIBlockElementUpdateHandler"));
-class GkeAccessUpdateClass
+function GkeOnBeforeIBlockElementUpdateHandler(&$arFields)
 {
-	public static function OnBeforeIBlockElementUpdateHandler(&$arFields)
+	$gkeIBlockID = (\CIBlock::GetList(Array(),Array("CODE"=> "gkeaccessmgmt"),false)->Fetch()['ID']);
+	if($arFields["IBLOCK_ID"] == $gkeIBlockID)
 	{
-		$gkeIBlockID = (\CIBlock::GetList(Array(),Array("CODE"=> "gkeaccessmgmt"),false)->Fetch()['ID']);
-		if($arFields["IBLOCK_ID"] == $gkeIBlockID)
-		{
-			$arFields["CODE"] =gkeAccessUniqueCode($gkeIBlockID);
-		}
+		$arFields["CODE"] =gkeAccessUniqueCode($gkeIBlockID);
 	}
 }
+
 
 //Agent
 function gkeAccessDisableElement()
@@ -122,9 +79,10 @@ function gkeAccessDisableElement()
 	global $DB;
 	
 	$timer = date('d.m.Y H:i:s');
-	//$filePath = $_SERVER['DOCUMENT_ROOT'].'/local/gkeagent.txt';
 
 	$gkeIBlockID = (\CIBlock::GetList(Array(),Array("CODE"=> "gkeaccessmgmt"),false)->Fetch()['ID']);
+
+	$arFields["CODE"] =gkeAccessUniqueCode($gkeIBlockID); 
 
 	$dbItems = [];
 	$dbItems = \CIBlockElement::GetList(
@@ -167,7 +125,8 @@ function gkeAccessDisableElement()
 			$iii++;
 		}
 	};
-		/*
+	/*
+	//$filePath = $_SERVER['DOCUMENT_ROOT'].'/local/gkeagent.txt';
 	$rs = fopen($filePath, "a+");
 	if($rs){
 		fwrite($rs, $timer." gke agent start"."\n");
