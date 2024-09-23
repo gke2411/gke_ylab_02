@@ -3,7 +3,7 @@
 namespace Sprint\Migration;
 
 
-class gkeAccessAgent20240908175303 extends Version
+class GkeAccessAgent20240914193821 extends Version
 {
     protected $author = "admin";
 
@@ -19,20 +19,21 @@ class gkeAccessAgent20240908175303 extends Version
     {
         $helper = $this->getHelperManager();
         $helper->Agent()->saveAgent(array (
-  'MODULE_ID' => '',
+  'MODULE_ID' => 'gke.access',
   'USER_ID' => NULL,
-  'SORT' => '10',
-  'NAME' => 'gkeAccessDisableElement();',
+  'SORT' => '100',
+  'NAME' => 'Gke\Access\AccessClass::gkeAccessDisableElement();',
   'ACTIVE' => 'Y',
-  'NEXT_EXEC' => '08.09.2024 15:25:00',
-  'AGENT_INTERVAL' => '60',
+  'NEXT_EXEC' => '14.09.2024 22:33:00',
+  'AGENT_INTERVAL' => '120',
   'IS_PERIOD' => 'Y',
   'RETRY_COUNT' => '0',
 ));
     }
+
     public function down(){
 		$helper = $this->getHelperManager();
-		$ok = $helper->Agent()->deleteAgent("", "gkeAccessDisableElement();");
+		$ok = $helper->Agent()->deleteAgent("gke.access", "Gke\Access\AccessClass::gkeAccessDisableElement();");
 		
         if ($ok) {
             $this->outSuccess('Агент удален');

@@ -1,6 +1,9 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 /** @var array $arParams */
 /** @var array $arResult */
+
+use Bitrix\Main\Localization\Loc;
+
 ?>
 <div class="news-line">
 <?
@@ -11,11 +14,11 @@
 		<thead class="main-grid-header">
 			<tr class="main-grid-row-head">
 				<th class="main-grid-cell-head" scope="col">#</th>
-				<th class="main-grid-cell-head" scope="col">NAME</th>
-				<th class="main-grid-cell-head" scope="col">DATE_ACTIVE_FROM</th>
-				<th class="main-grid-cell-head" scope="col">DATE_ACTIVE_TO</th>
-				<th class="main-grid-cell-head" scope="col">IS_ACTIVE</th>
-				<th class="main-grid-cell-head" scope="col">CODE</th>
+				<th class="main-grid-cell-head" scope="col"><?=Loc::getMessage("GKE_ACCESS_LIST_TABLE_COLUMN_NAME")?></th>
+				<th class="main-grid-cell-head" scope="col"><?=Loc::getMessage("GKE_ACCESS_LIST_TABLE_COLUMN_DATE_FROM")?></th>
+				<th class="main-grid-cell-head" scope="col"><?=Loc::getMessage("GKE_ACCESS_LIST_TABLE_COLUMN_DATE_TO")?></th>
+				<th class="main-grid-cell-head" scope="col"><?=Loc::getMessage("GKE_ACCESS_LIST_TABLE_COLUMN_IS_ACTIVE")?></th>
+				<th class="main-grid-cell-head" scope="col"><?=Loc::getMessage("GKE_ACCESS_LIST_TABLE_COLUMN_CODE")?></th>
 			</tr>
 		</thead>
 		<tbody>
